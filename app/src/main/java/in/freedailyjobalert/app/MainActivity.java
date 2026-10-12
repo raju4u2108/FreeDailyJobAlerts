@@ -29,7 +29,7 @@ public class MainActivity extends Activity {
     private static final String URL_HOME    = "https://freedailyjobalert.in";
     private static final String URL_JOBS    = "https://freedailyjobalert.in/govt-jobs/";
     private static final String URL_RESULTS = "https://freedailyjobalert.in/results/";
-    private static final String URL_ALERTS  = "https://freedailyjobalert.in/telegram-alerts/";
+    private static final String URL_ALERTS  = "https://t.me/freedailyjobalert";
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
