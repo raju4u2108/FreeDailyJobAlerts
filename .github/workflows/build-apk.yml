@@ -1,4 +1,4 @@
-name: Build APK
+name: Build Release APK
 
 on:
   push:
@@ -23,15 +23,24 @@ jobs:
           unzip -q gradle-8.4-bin.zip -d /opt/gradle
           echo "/opt/gradle/gradle-8.4/bin" >> $GITHUB_PATH
 
-      - name: Build Debug APK
-        run: gradle assembleDebug --no-daemon
+      - name: Decode Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/freedailyjobalert.keystore
+
+      - name: Build Release APK
+        run: |
+          gradle assembleRelease --no-daemon \
+            -Pandroid.injected.signing.store.file=$PWD/app/freedailyjobalert.keystore \
+            -Pandroid.injected.signing.store.password=${{ secrets.KEY_STORE_PASSWORD }} \
+            -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
+            -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
 
       - name: Rename APK
-        run: cp app/build/outputs/apk/debug/app-debug.apk FreeDailyJobAlerts.apk
+        run: cp app/build/outputs/apk/release/app-release.apk FreeDailyJobAlerts-release.apk
 
       - uses: actions/upload-artifact@v4
         with:
-          name: FreeDailyJobAlerts-APK
-          path: FreeDailyJobAlerts.apk
+          name: FreeDailyJobAlerts-release
+          path: FreeDailyJobAlerts-release.apk
           compression-level: 0
           retention-days: 90
