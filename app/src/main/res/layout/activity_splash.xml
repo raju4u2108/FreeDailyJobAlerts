@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/primary"
+    android:padding="32dp">
+
+    <!-- App logo (replace with your actual logo PNG) -->
+    <ImageView
+        android:id="@+id/splash_logo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/ic_logo"
+        android:contentDescription="FreeDailyJobAlert Logo"
+        android:layout_marginBottom="24dp" />
+
+    <!-- App name -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FreeDailyJobAlert"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Tagline -->
+    <TextView
+        android:id="@+id/splash_tagline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Daily Govt Job Notifications — Free"
+        android:textSize="13sp"
+        android:textColor="#CCFFFFFF"
+        android:layout_marginBottom="48dp" />
+
+    <!-- Loading dots -->
+    <ProgressBar
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/white" />
+
+</LinearLayout>

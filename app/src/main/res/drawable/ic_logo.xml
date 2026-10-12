@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Placeholder logo vector — replace with your actual logo PNG/SVG -->
+<!-- Place your logo as: app/src/main/res/drawable/ic_logo.png (192x192 px) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Blue circle background -->
+    <path
+        android:fillColor="#1d4ed8"
+        android:pathData="M60,0 A60,60 0,1,1 60,120 A60,60 0,1,1 60,0" />
+
+    <!-- White "F" letter -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M35,30 L80,30 L80,45 L50,45 L50,55 L75,55 L75,70 L50,70 L50,90 L35,90 Z" />
+
+</vector>

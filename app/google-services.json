@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "40041529271",
+    "project_id": "freedailyjobalerts",
+    "storage_bucket": "freedailyjobalerts.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:40041529271:android:8d31b175c5677863517232",
+        "android_client_info": {
+          "package_name": "in.freedailyjobalert.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxwlitGkIytrW4fTvCJP7t0tSfMBvbav4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

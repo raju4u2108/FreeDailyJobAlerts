@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FreeDailyJobAlerts</string>
+    <string name="app_tagline">Daily Govt Job Notifications</string>
+    <string name="site_url">https://freedailyjobalert.in</string>
+    <string name="url_home">https://freedailyjobalert.in</string>
+    <string name="url_jobs">https://freedailyjobalert.in/govt-jobs/</string>
+    <string name="url_results">https://freedailyjobalert.in/results/</string>
+    <string name="url_alerts">https://freedailyjobalert.in/telegram-alerts/</string>
+    <string name="offline_title">No Internet Connection</string>
+    <string name="offline_message">Please check your connection and try again</string>
+    <string name="retry">Try Again</string>
+    <string name="channel_id">fdja_jobs</string>
+    <string name="channel_name">Job Alerts</string>
+    <string name="default_notification_channel_id">fdja_jobs</string>
+</resources>

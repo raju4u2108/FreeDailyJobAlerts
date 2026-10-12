@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <!-- Web content wrapper -->
+    <FrameLayout
+        android:id="@+id/web_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_nav">
+
+        <!-- Progress bar at top -->
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_gravity="top"
+            android:max="100"
+            android:progressTint="@color/primary"
+            android:visibility="gone" />
+
+        <!-- WebView -->
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none" />
+    </FrameLayout>
+
+    <!-- Offline screen -->
+    <LinearLayout
+        android:id="@+id/offline_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_nav"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="32dp"
+        android:visibility="gone"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📡"
+            android:textSize="64sp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Internet Connection"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_dark"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please check your connection and try again"
+            android:textSize="14sp"
+            android:textColor="@color/text_gray"
+            android:gravity="center"
+            android:layout_marginBottom="32dp" />
+
+        <Button
+            android:id="@+id/btn_retry"
+            android:layout_width="200dp"
+            android:layout_height="48dp"
+            android:text="Try Again"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_primary"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Bottom navigation bar -->
+    <LinearLayout
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:elevation="8dp">
+
+        <!-- Home -->
+        <LinearLayout
+            android:id="@+id/nav_home"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="?attr/selectableItemBackground">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="🏠" android:textSize="20sp" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Home" android:textSize="10sp" android:textColor="@color/primary" />
+        </LinearLayout>
+
+        <!-- Jobs -->
+        <LinearLayout
+            android:id="@+id/nav_jobs"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="?attr/selectableItemBackground">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="💼" android:textSize="20sp" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Jobs" android:textSize="10sp" android:textColor="@color/text_gray" />
+        </LinearLayout>
+
+        <!-- Results -->
+        <LinearLayout
+            android:id="@+id/nav_results"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="?attr/selectableItemBackground">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="📋" android:textSize="20sp" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Results" android:textSize="10sp" android:textColor="@color/text_gray" />
+        </LinearLayout>
+
+        <!-- Alerts -->
+        <LinearLayout
+            android:id="@+id/nav_alerts"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="?attr/selectableItemBackground">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="🔔" android:textSize="20sp" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Alerts" android:textSize="10sp" android:textColor="@color/text_gray" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
