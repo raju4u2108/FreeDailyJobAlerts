@@ -26,8 +26,13 @@ jobs:
       - name: Build Debug APK
         run: gradle assembleDebug --no-daemon
 
-           - uses: actions/upload-artifact@v4
+      - name: Rename APK
+        run: cp app/build/outputs/apk/debug/app-debug.apk FreeDailyJobAlerts.apk
+
+      - name: Upload APK as Release
+        uses: actions/upload-artifact@v4
         with:
-          name: FreeDailyJobAlerts-debug
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: FreeDailyJobAlerts-APK
+          path: FreeDailyJobAlerts.apk
           compression-level: 0
+          retention-days: 90
