@@ -1,4 +1,4 @@
-name: Build Release APK
+name: Build Release AAB
 
 on:
   push:
@@ -27,20 +27,20 @@ jobs:
         run: |
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/freedailyjobalert.keystore
 
-      - name: Build Release APK
+      - name: Build Release AAB
         run: |
-          gradle assembleRelease --no-daemon \
+          gradle bundleRelease --no-daemon \
             -Pandroid.injected.signing.store.file=$PWD/app/freedailyjobalert.keystore \
             -Pandroid.injected.signing.store.password=${{ secrets.KEY_STORE_PASSWORD }} \
             -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
             -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
 
-      - name: Rename APK
-        run: cp app/build/outputs/apk/release/app-release.apk FreeDailyJobAlerts-release.apk
+      - name: Rename AAB
+        run: cp app/build/outputs/bundle/release/app-release.aab FreeDailyJobAlerts-release.aab
 
       - uses: actions/upload-artifact@v4
         with:
-          name: FreeDailyJobAlerts-release
-          path: FreeDailyJobAlerts-release.apk
+          name: FreeDailyJobAlerts-release-aab
+          path: FreeDailyJobAlerts-release.aab
           compression-level: 0
           retention-days: 90
