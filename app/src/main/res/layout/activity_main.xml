@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
@@ -10,7 +11,8 @@
         android:id="@+id/web_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottom_nav">
+        android:layout_above="@id/banner_ad_view"
+        android:layout_below="@+id/progress_bar_top">
 
         <!-- Progress bar at top -->
         <ProgressBar
@@ -36,7 +38,7 @@
         android:id="@+id/offline_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottom_nav"
+        android:layout_above="@id/banner_ad_view"
         android:orientation="vertical"
         android:gravity="center"
         android:padding="32dp"
@@ -77,6 +79,16 @@
             android:background="@drawable/btn_primary"
             android:textStyle="bold" />
     </LinearLayout>
+
+    <!-- AdMob Banner Ad — sits above bottom nav -->
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/banner_ad_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_nav"
+        android:layout_centerHorizontal="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-6810021797629614/9378591673" />
 
     <!-- Bottom navigation bar -->
     <LinearLayout
