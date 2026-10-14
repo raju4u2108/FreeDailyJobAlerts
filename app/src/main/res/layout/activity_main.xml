@@ -11,8 +11,7 @@
         android:id="@+id/web_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/banner_ad_view"
-        android:layout_below="@+id/progress_bar_top">
+        android:layout_above="@id/banner_ad_view">
 
         <!-- Progress bar at top -->
         <ProgressBar
