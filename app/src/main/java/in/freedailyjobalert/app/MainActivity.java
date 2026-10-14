@@ -19,12 +19,27 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+
 public class MainActivity extends Activity {
 
     private WebView webView;
     private ProgressBar progressBar;
     private LinearLayout offlineLayout;
     private FrameLayout webLayout;
+
+    // AdMob
+    private AdView bannerAdView;
+    private InterstitialAd interstitialAd;
+    private int pageLoadCount = 0;
+
+    private static final String BANNER_AD_UNIT_ID       = "ca-app-pub-6810021797629614/9378591673";
+    private static final String INTERSTITIAL_AD_UNIT_ID = "ca-app-pub-6810021797629614/4275447963";
 
     private static final String URL_HOME    = "https://freedailyjobalert.in";
     private static final String URL_JOBS    = "https://freedailyjobalert.in/govt-jobs/";
@@ -41,6 +56,12 @@ public class MainActivity extends Activity {
         progressBar   = findViewById(R.id.progress_bar);
         offlineLayout = findViewById(R.id.offline_layout);
         webLayout     = findViewById(R.id.web_layout);
+        bannerAdView  = findViewById(R.id.banner_ad_view);
+
+        // Initialize AdMob
+        MobileAds.initialize(this, initializationStatus -> {});
+        loadBannerAd();
+        loadInterstitialAd();
 
         setupWebView();
         setupBottomNav();
@@ -64,6 +85,40 @@ public class MainActivity extends Activity {
         }
     }
 
+    // ── AdMob ─────────────────────────────────────────────────────────────────
+
+    private void loadBannerAd() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+        bannerAdView.loadAd(adRequest);
+    }
+
+    private void loadInterstitialAd() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+        InterstitialAd.load(this, INTERSTITIAL_AD_UNIT_ID, adRequest,
+            new InterstitialAdLoadCallback() {
+                @Override
+                public void onAdLoaded(InterstitialAd ad) {
+                    interstitialAd = ad;
+                }
+                @Override
+                public void onAdFailedToLoad(LoadAdError error) {
+                    interstitialAd = null;
+                }
+            });
+    }
+
+    private void maybeShowInterstitial() {
+        pageLoadCount++;
+        // Show interstitial every 4 page loads
+        if (pageLoadCount % 4 == 0 && interstitialAd != null) {
+            interstitialAd.show(this);
+            interstitialAd = null;
+            loadInterstitialAd(); // preload next
+        }
+    }
+
+    // ── WebView ───────────────────────────────────────────────────────────────
+
     @SuppressLint("SetJavaScriptEnabled")
     private void setupWebView() {
         WebSettings settings = webView.getSettings();
@@ -77,8 +132,7 @@ public class MainActivity extends Activity {
         settings.setDisplayZoomControls(false);
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         settings.setSupportZoom(true);
-        // Custom UA so your analytics can filter app traffic
-        settings.setUserAgentString(settings.getUserAgentString() + " FDJA-AndroidApp/1.0");
+        settings.setUserAgentString(settings.getUserAgentString() + " FDJA-AndroidApp/2.0");
 
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
 
@@ -86,19 +140,16 @@ public class MainActivity extends Activity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 String url = request.getUrl().toString();
-                // Keep site URLs in WebView
                 if (url.startsWith("https://freedailyjobalert.in") ||
                     url.startsWith("http://freedailyjobalert.in")) {
                     return false;
                 }
-                // Open mailto/tel links with system apps
                 if (url.startsWith("mailto:") || url.startsWith("tel:") || url.startsWith("whatsapp:")) {
                     try {
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                     } catch (Exception e) { /* ignore */ }
                     return true;
                 }
-                // All other external URLs → open in browser
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                 } catch (Exception e) { /* ignore */ }
@@ -116,6 +167,7 @@ public class MainActivity extends Activity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 progressBar.setVisibility(View.GONE);
+                maybeShowInterstitial();
             }
 
             @Override
@@ -148,6 +200,8 @@ public class MainActivity extends Activity {
         });
     }
 
+    // ── Bottom Nav ────────────────────────────────────────────────────────────
+
     private void setupBottomNav() {
         findViewById(R.id.nav_home).setOnClickListener(v -> loadUrl(URL_HOME));
         findViewById(R.id.nav_jobs).setOnClickListener(v -> loadUrl(URL_JOBS));
@@ -168,7 +222,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        // Handle new notification tap while app is already open
         if (intent.getStringExtra("launch_url") != null) {
             loadUrl(intent.getStringExtra("launch_url"));
         }
@@ -197,23 +250,26 @@ public class MainActivity extends Activity {
         return super.onKeyDown(keyCode, event);
     }
 
+    // ── Lifecycle ─────────────────────────────────────────────────────────────
+
     @Override
     protected void onResume() {
         super.onResume();
         webView.onResume();
+        if (bannerAdView != null) bannerAdView.resume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         webView.onPause();
+        if (bannerAdView != null) bannerAdView.pause();
     }
 
     @Override
     protected void onDestroy() {
-        if (webView != null) {
-            webView.destroy();
-        }
+        if (webView != null) webView.destroy();
+        if (bannerAdView != null) bannerAdView.destroy();
         super.onDestroy();
     }
 }
